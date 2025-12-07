@@ -29,9 +29,9 @@ void ActGame(void)
         app.key_space = 0;   // SPACE 입력 초기화
     }
     // ★ [추가] 중력 반전 쿨타임 감소
-    if (player.gravity_cooldown > 0.0) {
-        player.gravity_cooldown -= dt;
-    }
+   // if (player.gravity_cooldown > 0.0) {
+        //player.gravity_cooldown -= dt;
+    //}
     gravity_inverted(dt);
     resolve_vertical_collision();
 
@@ -93,7 +93,7 @@ void ActGameOver(void) {
         player.is_grounded = 0;
         player.gravity_inverted = 0; // 부활하면 중력은 다시 정상으로
         player.texture = player_texture_normal; // 이미지도 정상으로
-        player.gravity_cooldown = 0.0;
+        //player.gravity_cooldown = 0.0;
         player.health = 1;
 
         ResetInputFlags();

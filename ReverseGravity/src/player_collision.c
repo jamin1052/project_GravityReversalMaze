@@ -17,23 +17,7 @@ int is_wall_tile(int t) {
 
 // ★ [핵심 수정] 플레이어의 몸체(사각형) 전체를 검사합니다.
 // 이전처럼 점 하나만 찍어서 검사하면, 겹쳐 있는데도 인식을 못 할 수 있습니다.
-int is_on_speed_tile(void) {
-    // 플레이어가 차지하고 있는 타일의 범위를 계산 (좌상단 ~ 우하단)
-    int start_tx = player.pos.x / TILE_SIZE;
-    int end_tx   = (player.pos.x + player.pos.w - 1) / TILE_SIZE;
-    int start_ty = player.pos.y / TILE_SIZE;
-    int end_ty   = (player.pos.y + player.pos.h - 1) / TILE_SIZE;
 
-    // 플레이어 몸이 걸쳐있는 모든 타일을 확인
-    for (int ty = start_ty; ty <= end_ty; ty++) {
-        for (int tx = start_tx; tx <= end_tx; tx++) {
-            if (get_tile_at(tx, ty) == TILE_SPEED) {
-                return 1; // 하나라도 스피드 타일이면 True!
-            }
-        }
-    }
-    return 0; // 안 닿음
-}
 /*
 int is_on_slow_tile(void) {
     int cx = player.pos.x + player.pos.w / 2;
@@ -54,23 +38,33 @@ int is_on_slow_tile(void) {
     return 0;
 }
 */ // --> 슬로우 타일 벽처리
+int is_on_speed_tile(void) {
+    int start_tx = player.pos.x / TILE_SIZE;
+    int end_tx   = (player.pos.x + player.pos.w - 1) / TILE_SIZE;
+    int start_ty = player.pos.y / TILE_SIZE;
+    int end_ty   = (player.pos.y + player.pos.h - 1) / TILE_SIZE;
+
+    for (int ty = start_ty; ty <= end_ty; ty++) {
+        for (int tx = start_tx; tx <= end_tx; tx++) {
+            if (get_tile_at(tx, ty) == TILE_SPEED) return 1;
+        }
+    }
+    return 0;
+}
+
 int is_on_slow_tile(void) {
     int start_tx = player.pos.x / TILE_SIZE;
     int end_tx   = (player.pos.x + player.pos.w - 1) / TILE_SIZE;
     int start_ty = player.pos.y / TILE_SIZE;
     int end_ty   = (player.pos.y + player.pos.h - 1) / TILE_SIZE;
 
-    // 플레이어 몸이 걸쳐있는 모든 타일을 확인
     for (int ty = start_ty; ty <= end_ty; ty++) {
         for (int tx = start_tx; tx <= end_tx; tx++) {
-            if (get_tile_at(tx, ty) == TILE_SLOW) {
-                return 1; // 닿았다!
-            }
+            if (get_tile_at(tx, ty) == TILE_SLOW) return 1;
         }
     }
     return 0;
 }
-
 // ... (아래는 기존 충돌 함수들 유지) ...
 
 int check_wall_collision(void) {
@@ -196,9 +190,11 @@ void check_interactive_tiles(void)
         player.checkpoint_y = ty * TILE_SIZE;
         player.checkpoint_room_row = current_room_row;
         player.checkpoint_room_col = current_room_col;
+        player.has_checkpoint = 1; // 이거 뭐노
     }
 
-    if (tile == TILE_GRAVITY_STRING) {
+
+    /*if (tile == TILE_GRAVITY_STRING) {
         if (player.gravity_cooldown <= 0.0) {
             player.gravity_inverted = !player.gravity_inverted;
             if (player.gravity_inverted)
@@ -208,4 +204,53 @@ void check_interactive_tiles(void)
             player.gravity_cooldown = 0.5; 
         }
     }
-}
+    */
+   if (tile == TILE_GRAVITY_STRING) {
+        
+        int local_y = cy % TILE_SIZE;
+        int center = TILE_SIZE / 2; 
+        int margin_y = 28; // 넓은 감지 범위 유지
+
+        if (local_y > (center - margin_y) && local_y < (center + margin_y)) 
+        {
+            // 타일이 바뀌었는지 확인
+            if (player.last_string_row != ty || player.last_string_col != tx) {
+                
+                // ★ [핵심] 수평으로 이어진 타일인지 확인
+                // (높이(Row)가 같고, 가로(Col) 차이가 1칸이면 '옆으로 걷는 중'임)
+                int diff_col = tx - player.last_string_col;
+                if (diff_col < 0) diff_col = -diff_col; // 절댓값 계산
+
+                int is_horizontal_move = 0;
+                if (player.last_string_row == ty && diff_col == 1) {
+                    is_horizontal_move = 1;
+                }
+
+                if (is_horizontal_move) {
+                    // 옆으로 이동 중이면 -> 중력 유지 (반전 X), 위치만 갱신
+                    // 이렇게 해야 천장을 타고 쭉 걸어갈 수 있습니다.
+                    player.last_string_row = ty;
+                    player.last_string_col = tx;
+                }
+                else {
+                    // 수평 이동이 아님 (점프해서 닿았거나, 위아래로 이동) -> 중력 반전!
+                    player.gravity_inverted = !player.gravity_inverted;
+                    
+                    if (player.gravity_inverted)
+                        player.texture = player_texture_reverse;
+                    else
+                        player.texture = player_texture_normal;
+
+                    player.last_string_row = ty;
+                    player.last_string_col = tx;
+                }
+            }
+        }
+    }
+    else {
+        // 실 타일 밖으로 벗어나면 기록 초기화 (다시 밟을 수 있게)
+        player.last_string_row = -1;
+        player.last_string_col = -1;
+    }
+    //안전 장치: is_touching_string 플래그 덕분에, 실 타일 내부를 지나가는 동안 중력이 위->아래->위로 미친듯이 바뀌는 버그가 발생하지 않습니다. (실을 완전히 빠져나갔다가 다시 닿아야만 작동)
+ }

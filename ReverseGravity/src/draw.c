@@ -67,9 +67,11 @@ void DrawMap(void) {
                     destRect.y += (TILE_SIZE - destRect.h); 
                 }
                 else if (tile_type == TILE_GRAVITY_STRING) {
-                    // 실: 가로 중앙 정렬 + 천장(위) 정렬 (y는 그대로)
+                    //[수정] 실: 가로 중앙 + 세로 중앙 정렬 (이제 공중에 뜹니다!)
                     destRect.x += (TILE_SIZE - destRect.w) / 2;
+                    destRect.y += (TILE_SIZE - destRect.h) / 2; 
                 }
+                
 
                 // 화면 밖 컬링 (Culling)
                 if (destRect.x + destRect.w < 0) continue;

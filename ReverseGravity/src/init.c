@@ -177,7 +177,12 @@ void InitPlayer(void) {
     player.checkpoint_y = player.pos.y;
     player.checkpoint_room_row = current_room_row;
     player.checkpoint_room_col = current_room_col;
-    player.gravity_cooldown = 0.0; 
+    //player.gravity_cooldown = 0.0; 
+    // ★ [수정] 플래그 초기화
+    player.last_string_row = -1;
+    player.last_string_col = -1;
+
+    player.has_checkpoint = 0;
 }
 
 void InitTiles(void) {}

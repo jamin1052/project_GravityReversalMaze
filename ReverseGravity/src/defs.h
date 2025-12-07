@@ -71,7 +71,12 @@ typedef struct {
     int checkpoint_y;       // 저장된 부활 위치 Y
     int checkpoint_room_row;  // 체크포인트가 위치한 방의 행 인덱스
     int checkpoint_room_col;  // 체크포인트가 위치한 방의 열 인덱스
-    double gravity_cooldown; // 중력 반전 쿨타임 (초 단위)
+
+    int last_string_row; 
+    int last_string_col; 
+    //double gravity_cooldown; // 중력 반전 쿨타임 (초 단위)
+    int has_checkpoint; 
+    // double speed_timer; (만약 스피드 타이머 쓰고 계시다면 유지)
 } Entity;
 
 typedef struct {
