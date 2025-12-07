@@ -19,11 +19,14 @@ Entity player;
 Camera camera = {0, 0};
 
 // 타일 텍스처 전역 정의 (defs.h 에 extern 있음)
-SDL_Texture* g_tile_textures[12]; // ★ [수정] 10 -> 11 ->12
+SDL_Texture* g_tile_textures[16]; // ★ [수정] 10 -> 11 ->12
 
 SDL_Texture* player_texture_normal = NULL;
 SDL_Texture* player_texture_reverse = NULL;
 
+// ★ [추가] 여기 두 줄을 꼭 넣어야 합니다!
+SDL_Texture* g_laser_beam_texture = NULL;   // 레이저 빔 텍스처 실제 생성
+Projectile g_projectiles[MAX_PROJECTILES];  // 투사체 배열 실제 생성
 // 폰트 전역 정의 (scene_title.c 에서 extern)
 TTF_Font* font_normal = NULL;
 TTF_Font* font_selected = NULL;
@@ -103,6 +106,15 @@ void InitSDL(void) {
     load_tile_texture(&g_tile_textures[TILE_SPEED], "./gfx/Speed.png");
     load_tile_texture(&g_tile_textures[TILE_SLOW], "./gfx/Slow.png");
     // 사운드 초기화
+
+    load_tile_texture(&g_tile_textures[TILE_LASER_FLOOR], "./gfx/Laser.png");
+    g_tile_textures[TILE_LASER_CEILING] = g_tile_textures[TILE_LASER_FLOOR]; 
+
+    // ★ [추가] 벽면 레이저도 같은 이미지 사용 (그릴 때 회전)
+    g_tile_textures[TILE_LASER_LEFT] = g_tile_textures[TILE_LASER_FLOOR];
+    g_tile_textures[TILE_LASER_RIGHT] = g_tile_textures[TILE_LASER_FLOOR];
+
+    load_tile_texture(&g_laser_beam_texture, "./gfx/LaserBeam.png");
     
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
         printf("SDL_mixer 초기화 실패: %s\n", Mix_GetError());

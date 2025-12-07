@@ -35,6 +35,18 @@
 #define TILE_GOAL 9
 #define TILE_SPEED 10         // ★ [추가] 속도 증가 타일
 #define TILE_SLOW 11
+
+// ... (기존 타일 정의) ...
+#define TILE_LASER_FLOOR 12   
+#define TILE_LASER_CEILING 13 
+// ★ [추가] 벽면 레이저 타일
+#define TILE_LASER_LEFT 14    // 왼쪽 벽 (오른쪽으로 발사)
+#define TILE_LASER_RIGHT 15   // 오른쪽 벽 (왼쪽으로 발사)
+
+// ★ [추가] 최대 투사체 개수
+#define MAX_PROJECTILES 100
+
+extern SDL_Texture* g_laser_beam_texture;
 // ----------------------------------------
 // 구조체 정의
 // ----------------------------------------
@@ -95,7 +107,22 @@ extern Mix_Music *bgm;
 extern Mix_Chunk *death_effect;
 
 extern int g_map_data[MAP_HEIGHT][MAP_WIDTH];
-extern SDL_Texture* g_tile_textures[12]; // ★ [수정] 12 -->>맵 배열 원소 개수 각 이미지
+extern SDL_Texture* g_tile_textures[16]; // ★ [수정] 12 -->>맵 배열 원소 개수 각 이미지
+
+// ★ [추가] 투사체 구조체 정의
+typedef struct {
+    double x, y;      
+    double vx, vy;    
+    int active;       
+    double angle;     
+    int w; // 히트박스 너비
+    int h; // 히트박스 높이
+} Projectile;
+
+
+// ★ [추가] 투사체 관련 전역 변수
+extern SDL_Texture* g_laser_beam_texture;
+extern Projectile g_projectiles[MAX_PROJECTILES];
 
 extern SDL_Texture* player_texture_normal;
 extern SDL_Texture* player_texture_reverse;
@@ -118,3 +145,4 @@ typedef struct {
 } Camera;
 
 extern Camera camera;
+

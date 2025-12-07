@@ -6,7 +6,7 @@
 #include "defs.h"
 #include "action.h"
 #include "map.h"
-
+#include "projectile.h" // ★ [추가] 투사체 함수 사용을 위해 필요
 
 #define JUMP_SPEED 900.0
 
@@ -28,6 +28,11 @@ void ActGame(void)
 
         app.key_space = 0;   // SPACE 입력 초기화
     }
+
+    // ★ [추가] 투사체(레이저) 업데이트
+    // 플레이어 이동 전에 하든 후에 하든 큰 상관은 없지만,
+    // 보통 충돌 체크 전에 위치를 먼저 갱신하는 것이 좋습니다.
+    UpdateProjectiles(dt);
     // ★ [추가] 중력 반전 쿨타임 감소
    // if (player.gravity_cooldown > 0.0) {
         //player.gravity_cooldown -= dt;
