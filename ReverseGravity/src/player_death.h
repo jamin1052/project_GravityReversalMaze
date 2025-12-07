@@ -1,0 +1,1 @@
+void kill_player(void);

@@ -1,0 +1,4 @@
+<map id="ActBullet" name="ActBullet">
+<area shape="rect" id="node2" href="$group___utils.html#ga53db3177844e1195be84da6b045d19cb" title="주인공 혹은 총알이 벽 밖으로 넘어갔는지 확인 " alt="" coords="128,5,264,32"/>
+<area shape="rect" id="node3" href="$group___utils.html#ga108e3df81f9bc0ce2ddcfae182544d7a" title="주인공 혹은 총알이 어느 방향 벽과 충돌했는지 확인 " alt="" coords="128,56,264,83"/>
+</map>
