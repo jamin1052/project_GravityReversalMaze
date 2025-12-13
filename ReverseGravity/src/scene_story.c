@@ -44,18 +44,21 @@ void story_init(void)
     // ===== 말풍선 영역(이미지 기준) =====
     // SCREEN_WIDTH=1600, SCREEN_HEIGHT=1280 기준으로 비율로 잡음
     SDL_Rect bubble = {
-        (int)(SCREEN_WIDTH  * 0.234f), // x
-        (int)(SCREEN_HEIGHT * 0.322f), // y
-        (int)(SCREEN_WIDTH  * 0.606f), // w
-        (int)(SCREEN_HEIGHT * 0.322f)  // h
+        (int)(SCREEN_WIDTH  * 0.35f), // x
+        (int)(SCREEN_HEIGHT * 0.30f), // y
+        (int)(SCREEN_WIDTH  * 0.68f), // w
+        (int)(SCREEN_HEIGHT * 0.30f)  // h
     };
-    int padding = 35; // 말풍선 테두리랑 글자 간격
+    int padding = 40; // 말풍선 테두리랑 글자 간격
         // ---- 텍스트(안내 문구) 생성 시작 ----
     SDL_Color white = {255, 255, 255, 255};
     const char* hint = 
         "       Hello, player~. I'm virus!  \n"
-        "       We're going to hack this computer.  \n "
-        "       Let's go~";
+        "       We're going to hack this computer. Let's go~ \n "
+        "       If you want to start, press space button! \n"
+        "\n"
+        "\n"
+        "       -> : right, <- : left, spacebar : reverse \n";
     // 말풍선 폭 안에서 자동 줄바꿈
     int wrap = bubble.w - padding * 2;
 
