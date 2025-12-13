@@ -5,6 +5,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
+
 extern App app;
 extern TTF_Font* font_normal;
 extern TTF_Font* font_selected;
