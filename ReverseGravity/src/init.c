@@ -125,19 +125,18 @@ void InitSDL(void) {
 
     interface_bgm = Mix_LoadMUS("sound/interfaceBGM.wav");
     if (!interface_bgm) {
-        printf("interface.mp3 로드 실패: %s\n", Mix_GetError());
+        printf("interface.wav 로드 실패: %s\n", Mix_GetError());
     }
 
-    checkpoint_effect = Mix_LoadWAV("sound/checkpoint.mp3");
-    if (!checkpoint_effect) {
-        printf("checkpoint_effect.mp3 로드 실패: %s\n", Mix_GetError());
-    }
-
-    gameplayBGM = Mix_LoadMUS("sound/gameplayBGM.mp3");
+    gameplayBGM = Mix_LoadMUS("sound/gameplayBGM.wav");
     if (!gameplayBGM) {
-        printf("gameplayBGM.mp3 로드 실패: %s\n", Mix_GetError());
+        printf("gameplayBGM.wav 로드 실패: %s\n", Mix_GetError());
     }
 
+    checkpoint_effect = Mix_LoadWAV("sound/checkpoint.wav");
+    if (!checkpoint_effect) {
+        printf("checkpoint.wav 로드 실패: %s\n", Mix_GetError());
+    }
 
 
     death_effect = Mix_LoadWAV("sound/deathsound.wav");
