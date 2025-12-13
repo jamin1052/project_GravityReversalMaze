@@ -33,8 +33,23 @@ void SpawnProjectile(int x, int y, double vx, double vy, double angle, int w, in
 // --------------------------------------------------------
 // 메인 업데이트 함수
 // --------------------------------------------------------
+// ★ [추가] 투사체 전체 초기화 및 타이머 리셋 함수
+void ClearProjectiles(void) {
+    // 1. 모든 투사체 비활성화 (맵 이동 시 잔여 총알 제거)
+    for (int i = 0; i < MAX_PROJECTILES; i++) {
+        g_projectiles[i].active = 0;
+    }
+
+    // 2. 발사 타이머를 INTERVAL 값으로 설정
+    // 이렇게 하면 맵에 진입하자마자 첫 프레임에 바로 레이저가 나갑니다.
+    shoot_timer = LASER_INTERVAL;
+}
+
 void UpdateProjectiles(double dt) {
-    // 1. 발사 타이머 (기존 유지)
+    // ... (기존 UpdateProjectiles 내용 유지) ...
+    // shoot_timer 로직이 그대로 있어도, 위에서 초기화 값을 바꿔주었으므로 바로 발사됩니다.
+    
+    // 1. 발사 타이머
     shoot_timer += dt;
     if (shoot_timer >= LASER_INTERVAL) {
         shoot_timer = 0.0;
@@ -82,8 +97,7 @@ void UpdateProjectiles(double dt) {
 
             int tile = g_map_data[ty][tx];
 
-            // ★ [수정] 바닥(1) 뿐만 아니라 가시(2,3,4,5)에도 닿으면 소멸!
-            // TILE_SPIKE(2) ~ TILE_SPIKE_RIGHT(5) 범위를 체크
+            // 바닥(1) 뿐만 아니라 가시(2,3,4,5)에도 닿으면 소멸
             if (tile == TILE_FLOOR || (tile >= TILE_SPIKE && tile <= TILE_SPIKE_RIGHT)) { 
                 p->active = 0; 
                 continue;

@@ -1,6 +1,6 @@
 #include <string.h>
 #include "map.h"
-
+#include "projectile.h" // ★ [추가] 헤더 포함 필수
 // --- 2×2 방 데이터 배열들 ---
 int g_room00[MAP_HEIGHT][MAP_WIDTH] =
 {
@@ -328,6 +328,10 @@ void LoadRoom(int row, int col)
 
     current_room_row = row;
     current_room_col = col;
+    
+    // ★ [추가] 방을 불러올 때마다 투사체와 타이머를 초기화
+    // 이로 인해 맵 이동 시 이전 맵의 총알이 사라지고, 새 맵의 레이저가 즉시 발사됩니다.
+    ClearProjectiles();
 }
 
 
