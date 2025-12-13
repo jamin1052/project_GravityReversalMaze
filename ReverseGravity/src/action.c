@@ -7,12 +7,21 @@
 #include "action.h"
 #include "map.h"
 #include "projectile.h" // ★ [추가] 투사체 함수 사용을 위해 필요
+#include <SDL2/SDL_mixer.h>
 
 #define JUMP_SPEED 900.0
+
+static int game_bgm_playing = 0;
 
 void ActGame(void)
 {
     const double dt = 1.0 / 60.0;
+
+    if (!game_bgm_playing)
+    {
+        Mix_PlayMusic(gameplayBGM, -1); // 무한 반복
+        game_bgm_playing = 1;
+    }
 
     // 살아있을 때도 R 누르면 즉시 체크포인트로
     if (app.key_r)
@@ -91,6 +100,11 @@ void ActGame(void)
 }
 
 void ActGameOver(void) {
+    if (game_bgm_playing)
+    {
+        Mix_HaltMusic();
+        game_bgm_playing = 0;
+    }
     if(app.key_r){
         // ★ [수정] InitPlayer()를 부르면 텍스처를 또 로드하니까, 
         // 변수만 초기화하는 방식으로 변경하는 게 좋아.

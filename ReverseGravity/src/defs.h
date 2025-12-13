@@ -127,6 +127,8 @@ extern Projectile g_projectiles[MAX_PROJECTILES];
 extern SDL_Texture* player_texture_normal;
 extern SDL_Texture* player_texture_reverse;
 
+extern Mix_Music *gameplayBGM;
+
 typedef enum {
     STATE_TITLE,
     STATE_GAME,

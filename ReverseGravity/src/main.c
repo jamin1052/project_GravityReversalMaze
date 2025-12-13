@@ -12,6 +12,7 @@
 #include "scene_title.h"
 #include "map.h"
 
+
 Mix_Music *bgm;
 extern Mix_Chunk *death_effect;
 
@@ -32,8 +33,14 @@ int main(void) {
         {
             SDL_Event event;
             while (SDL_PollEvent(&event)) {
-                if (event.type == SDL_QUIT) QuitSDL();
-                if (event.type == SDL_KEYDOWN && event.key.keysym.scancode == SDL_SCANCODE_ESCAPE) QuitSDL();
+                if (event.type == SDL_QUIT)
+                {
+                    game_state = STATE_EXIT;
+                }
+                if (event.type == SDL_KEYDOWN && event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
+                {
+                    game_state = STATE_EXIT;
+                }
             }
         }
         else GetInput();
@@ -43,7 +50,10 @@ int main(void) {
             case STATE_TITLE: title_update(); title_render(); break;
             case STATE_GAME: ActGame(); DrawGame(); break;
             case STATE_GAMEOVER: ActGameOver(); DrawGameOver(); break;
-            case STATE_ENDING: DrawEnding(); break;
+            case STATE_ENDING:
+                if (Mix_PlayingMusic()) Mix_HaltMusic();
+                DrawEnding();
+                break;
             case STATE_EXIT: QuitSDL(); exit(0);
         }
 
