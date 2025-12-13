@@ -4,11 +4,17 @@
 #include "player_collision.h"
 #include "map.h"
 
-// MOVE_SPEED 기본값 정의 (혹시 없으면 600.0으로 설정)
+// ==================================================
+// 기본 이동 속도
+// player_move.h에 정의되어 있지 않으면 기본값 사용
+// ==================================================
 #ifndef MOVE_SPEED
-#define MOVE_SPEED 600.0 
+#define MOVE_SPEED 600.0
 #endif
 
+// ==================================================
+// 수평 이동 처리
+// ==================================================
 void move_player_horzontal(double dt)
 {
     int dir = 0;
@@ -18,38 +24,38 @@ void move_player_horzontal(double dt)
     else if (app.key_right && !app.key_left)
         dir = 1;
 
-    // ★ [핵심] 수평 속도 계산
+        
+    // 이동 속도 계산
     double current_speed = MOVE_SPEED;
 
-    // 가속 타일 (2배)
-    if (is_on_speed_tile()) {
+    // 가속 타일
+    if (is_on_speed_tile())
         current_speed *= 2.0;
-    }
-    
-    // 감속 타일 (0.5배)
-    if (is_on_slow_tile()) {
+
+    // 감속 타일
+    if (is_on_slow_tile())
         current_speed *= 0.5;
-    }
 
     player.v_x = dir * current_speed;
 
+    // 위치 이동
     int old_x = player.pos.x;
     player.pos.x += (int)(player.v_x * dt);
 
+    // 벽 충돌 시 이동 취소
     if (check_wall_collision())
-    {
         player.pos.x = old_x;
-    }
 }
 
-extern Entity player;
-
-void UpdatePlayer()
+// ==================================================
+// 플레이어 위치 기반 방 전환 처리
+// ==================================================
+void UpdatePlayer(void)
 {
     int screen_w = MAP_WIDTH * TILE_SIZE;
     int screen_h = MAP_HEIGHT * TILE_SIZE;
 
-    // 방 전환 처리
+    // 오른쪽 / 왼쪽 방 이동
     if (player.pos.x >= screen_w)
     {
         ChangeRoom(0, +1);
@@ -61,6 +67,7 @@ void UpdatePlayer()
         player.pos.x = screen_w - player.pos.w;
     }
 
+    // 아래 / 위 방 이동
     if (player.pos.y >= screen_h)
     {
         ChangeRoom(+1, 0);

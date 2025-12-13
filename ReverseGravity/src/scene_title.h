@@ -3,9 +3,14 @@
 
 #include <SDL2/SDL.h>
 
-void title_init();
-void title_update();
-void title_render();
+// ==================================================
+// 시작화면 생성 및 렌더링
+// ==================================================
+void title_init(void);
+void title_update(void);
+void title_render(void);
+
+// 엔딩화면
 void InitEnding(void);
 void DrawEnding(void);
 

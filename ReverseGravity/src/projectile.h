@@ -1,8 +1,14 @@
 #pragma once
 
-void InitProjectiles(void);
+// ==================================================
+// Projectile / Laser 시스템
+// ==================================================
+
+// 투사체 업데이트
 void UpdateProjectiles(double dt);
+
+// 투사체 렌더링
 void RenderProjectiles(void);
 
-// ★ [추가] 맵 이동 시 투사체 초기화 및 타이머 리셋 함수
+// 방 이동 시 투사체 초기화
 void ClearProjectiles(void);
