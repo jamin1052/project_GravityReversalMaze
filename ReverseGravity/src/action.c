@@ -53,6 +53,7 @@ void ActGame(void)
    // if (player.gravity_cooldown > 0.0) {
         //player.gravity_cooldown -= dt;
     //}
+    move_player_horzontal(dt);
     gravity_inverted(dt);
     resolve_vertical_collision();
 
@@ -65,7 +66,7 @@ void ActGame(void)
     // ---------------------------------------
     // 가로 이동
     // ---------------------------------------
-    move_player_horzontal(dt);
+
 
     // ---------------------------------------
     // 점프 (DOWN 사용)
