@@ -14,7 +14,7 @@
 // 전역 리소스 (사운드 / 텍스처)
 // ==================================================
 
-Mix_Music* interface_bgm = NULL;   // NOTE: 타이틀/메뉴용 (현재 게임 루프에선 미사용)
+Mix_Music* interface_bgm = NULL;   // 타이틀/메뉴용 (현재 게임 루프에선 미사용)
 Mix_Music* gameplayBGM = NULL;    // 인게임 BGM
 Mix_Music* ending_bgm   = NULL;   // 엔딩 BGM
 
@@ -50,7 +50,7 @@ Projectile g_projectiles[MAX_PROJECTILES];
 // 폰트 (타이틀/스토리 씬용)
 // ==================================================
 
-// NOTE: 게임 플레이 중에는 사용하지 않음
+// 게임 플레이 중에는 사용하지 않음
 TTF_Font* font_normal   = NULL;
 TTF_Font* font_selected = NULL;
 
@@ -248,16 +248,9 @@ void InitPlayer(void)
     player.checkpoint_room_row = current_room_row;
     player.checkpoint_room_col = current_room_col;
 
-    // UNUSED: 중력 쿨타임 시스템 제거됨
-    // player.gravity_cooldown = 0.0;
-
     player.last_string_row = -1;
     player.last_string_col = -1;
 
     player.has_checkpoint = 0;
     player.last_checkpoint_id = -1;
 }
-
-// UNUSED:
-// 타일 초기화는 InitSDL에서 이미 처리됨
-// void InitTiles(void) {}

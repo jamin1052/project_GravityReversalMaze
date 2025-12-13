@@ -57,17 +57,9 @@ void ActGame(void)
     check_goal_reach();
     check_interactive_tiles(); // 사용 중 (상호작용 타일)
 
-    // ---------------------------------------
-    // 점프 (DOWN 사용)
-    // ---------------------------------------
-    if (app.key_down && player.is_grounded)
-    {
-        double jump_dir = player.gravity_inverted ? 1.0 : -1.0;
-        player.v_y = JUMP_SPEED * jump_dir;
-        player.is_grounded = 0;
 
-        app.key_down = 0;
-    }
+    gravity_inverted(dt);
+
     
     // 방 이동 / 플레이어 상태 업데이트
     UpdatePlayer();

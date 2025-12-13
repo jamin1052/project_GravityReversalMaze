@@ -5,7 +5,7 @@
 
 
 // 고정 낙하 속도
-#define FALL_SPEED 2000.0 
+#define FALL_SPEED 1000.0 
 
 
 void gravity_inverted(double dt)
