@@ -85,7 +85,8 @@ typedef struct {
     int checkpoint_room_col;  // 체크포인트가 위치한 방의 열 인덱스
 
     int last_string_row; 
-    int last_string_col; 
+    int last_string_col;
+    int last_checkpoint_id; 
     //double gravity_cooldown; // 중력 반전 쿨타임 (초 단위)
     int has_checkpoint; 
     // double speed_timer; (만약 스피드 타이머 쓰고 계시다면 유지)
@@ -104,6 +105,8 @@ typedef struct {
 extern App app;
 extern Entity player;
 extern Mix_Music *bgm;
+extern Mix_Music *gameplayBGM;
+extern Mix_Chunk *checkpoint_effect;
 extern Mix_Chunk *death_effect;
 
 extern int g_map_data[MAP_HEIGHT][MAP_WIDTH];

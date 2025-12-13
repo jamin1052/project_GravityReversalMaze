@@ -73,7 +73,7 @@ app ) 주인공 ( \ref player ), 총알 ( \ref bullet ), 점수판 ( \ref score_
 #include "input.h"
 #include "action.h"
 #include "draw.h"
-#include "sound.h"
+// #include "sound.h"
 
 /*사용하는 전역 변수*/
 /// @ingroup GlobalVariables
@@ -81,7 +81,7 @@ App app;                        /**< 프로그램 전체 단위로 관리하는 
 /// @ingroup GlobalVariables
 Entity player;                  /**< 주인공의 속성을 설명하는 Entity형 구조체*/
 /// @ingroup GlobalVariables
-Entity bullet[NUM_BULLETS];     /**< 총알의 속성을 설명하는 Entity형 구조체*/
+// Entity bullet[NUM_BULLETS];     /**< 총알의 속성을 설명하는 Entity형 구조체*/
 /// @ingroup GlobalVariables
 Entity game_over;               /**< 게임오버 화면의 속성을 설명하는 Entity형 구조체*/
 /// @ingroup GlobalVariables

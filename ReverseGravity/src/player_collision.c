@@ -186,11 +186,26 @@ void check_interactive_tiles(void)
     int tile = get_tile_at(tx, ty);
 
     if (tile == TILE_CHECKPOINT) {
-        player.checkpoint_x = tx * TILE_SIZE;
-        player.checkpoint_y = ty * TILE_SIZE;
-        player.checkpoint_room_row = current_room_row;
-        player.checkpoint_room_col = current_room_col;
-        player.has_checkpoint = 1; // 이거 뭐노
+        // player.checkpoint_x = tx * TILE_SIZE;
+        // player.checkpoint_y = ty * TILE_SIZE;
+        // player.checkpoint_room_row = current_room_row;
+        // player.checkpoint_room_col = current_room_col;
+        // player.has_checkpoint = 1; // 이거 뭐노
+
+        int checkpoint_id = ty * MAP_WIDTH + tx;
+
+        if(player.last_checkpoint_id != checkpoint_id){
+            player.last_checkpoint_id = checkpoint_id;
+            
+            player.checkpoint_x = tx * TILE_SIZE;
+            player.checkpoint_y = ty * TILE_SIZE;
+            
+            player.checkpoint_room_row = current_room_row;
+            player.checkpoint_room_col = current_room_col;
+            
+            player.has_checkpoint = 1;
+            Mix_PlayChannel(-1, checkpoint_effect, 0);
+        }
     }
 
 

@@ -12,6 +12,7 @@
 
 Mix_Music* interface_bgm = NULL;
 Mix_Music *gameplayBGM = NULL;
+Mix_Chunk* checkpoint_effect = NULL;
 Mix_Chunk* death_effect = NULL;
 
 // 전역 변수 정의
@@ -127,10 +128,17 @@ void InitSDL(void) {
         printf("interface.mp3 로드 실패: %s\n", Mix_GetError());
     }
 
+    checkpoint_effect = Mix_LoadWAV("sound/checkpoint.mp3");
+    if (!checkpoint_effect) {
+        printf("checkpoint_effect.mp3 로드 실패: %s\n", Mix_GetError());
+    }
+
     gameplayBGM = Mix_LoadMUS("sound/gameplayBGM.mp3");
     if (!gameplayBGM) {
         printf("gameplayBGM.mp3 로드 실패: %s\n", Mix_GetError());
     }
+
+
 
     death_effect = Mix_LoadWAV("sound/deathsound.wav");
     if (!death_effect) {
