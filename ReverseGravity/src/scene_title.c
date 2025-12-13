@@ -1,7 +1,6 @@
 #include "scene_title.h"
 #include "defs.h"
 #include "init.h"
-#include "draw.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
