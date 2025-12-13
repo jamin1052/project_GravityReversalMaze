@@ -4,7 +4,7 @@
 #include "projectile.h"
 #include "player_death.h"
 
-#define LASER_SPEED 800.0      
+#define LASER_SPEED 600.0      
 // ★ [수정] 발사 간격을 1.0초로 변경 (더 자주 쏨)
 #define LASER_INTERVAL 1.0     
 
