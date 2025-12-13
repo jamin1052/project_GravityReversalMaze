@@ -25,7 +25,7 @@ void story_init(void)
 {
     story_destroy();
 
-    story_img = IMG_LoadTexture(app.renderer, "gfx/story.png");
+    story_img = IMG_LoadTexture(app.renderer, "gfx/scene_story.jpg");
     if (!story_img) {
         printf("Story image load failed: %s\n", IMG_GetError());
         // 스토리 이미지 없으면 그냥 게임으로 넘어가게
