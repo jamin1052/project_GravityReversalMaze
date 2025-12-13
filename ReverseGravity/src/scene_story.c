@@ -6,6 +6,9 @@
 #include "map.h"
 #include "init.h"
 #include "defs.h"
+/*
+  처음에 start 버튼을 눌렀을 때 나오는 story랑 조작 방법에 대해서 설명
+*/
 
 extern App app;
 extern GameState game_state;
@@ -54,13 +57,13 @@ void story_init(void)
     SDL_Color white = {255, 255, 255, 255};
     const char* hint = 
         "\n"
-        "       Hello, player~. I'm virus!  \n"
-        "       We're going to hack this computer. Let's go~ \n "
-        "       If you want to start, press spacebar! \n"
+        "Hello, player~. I'm virus!  \n"
+        "We're going to hack this computer. Let's go~ \n "
+        "If you want to start, press spacebar! \n"
         "\n"
-        "       -> : Right \n"
-        "       <- : Left \n"
-        "       Spacebar : Gravity Reverse \n";
+        "-> : Right \n"
+        "<- : Left \n"
+        "Spacebar : Gravity Reverse \n";
     // 말풍선 폭 안에서 자동 줄바꿈
     int wrap = bubble.w - padding * 2;
 
